@@ -49,6 +49,10 @@ public class User {
 
     private String profilePictureUrl;
 
+    private Long currentHackathonId;
+
+    private Long currentTeamId;
+
     private boolean blocked;
 
     @ManyToMany

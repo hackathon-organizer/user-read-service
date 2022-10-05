@@ -21,6 +21,10 @@ public record UserResponseDto(
 
         String profilePictureUrl,
 
+        Long currentHackathonId,
+
+        Long currentTeamId,
+
         boolean blocked,
 
         List<TagResponseDto> tags
@@ -34,6 +38,8 @@ public record UserResponseDto(
                 user.getAccountType(),
                 user.getGithubProfileUrl(),
                 user.getProfilePictureUrl(),
+                user.getCurrentHackathonId(),
+                user.getCurrentTeamId(),
                 user.isBlocked(),
                 mapTagsToDto(user.getTags())
         );
