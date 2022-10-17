@@ -2,8 +2,11 @@ spring:
   config:
     import: optional:configserver:http://localhost:8888/
   cloud:
-    config:
-      token: roottoken
+    vault:
+      generic:
+        enabled: true
+        profile-separator: '/'
+        default-context: user-read-service
   application:
     name: user-read-service
   jpa:

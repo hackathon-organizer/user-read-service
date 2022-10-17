@@ -1,26 +1,18 @@
-package com.teamsfinder.userreadservice.user.model;
+package com.hackathonorganizer.userreadservice.user.model;
 
-import com.teamsfinder.userreadservice.tag.model.Tag;
+
+import com.hackathonorganizer.userreadservice.tag.model.Tag;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.util.List;
-import java.util.UUID;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -60,4 +52,7 @@ public class User {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "tag_id"))
     private List<Tag> tags;
+
+    @OneToMany(mappedBy = "user")
+    Set<ScheduleEntry> scheduleEntries;
 }

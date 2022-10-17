@@ -1,13 +1,15 @@
-package com.teamsfinder.userreadservice.user.service;
+package com.hackathonorganizer.userreadservice.user.service;
 
-import com.teamsfinder.userreadservice.user.dto.UserResponseDto;
-import com.teamsfinder.userreadservice.user.exception.UserNotFoundException;
-import com.teamsfinder.userreadservice.user.model.User;
-import com.teamsfinder.userreadservice.user.repository.UserRepository;
+import com.hackathonorganizer.userreadservice.user.dto.UserResponseDto;
+import com.hackathonorganizer.userreadservice.user.exception.UserNotFoundException;
+import com.hackathonorganizer.userreadservice.user.model.ScheduleEntry;
+import com.hackathonorganizer.userreadservice.user.model.User;
+import com.hackathonorganizer.userreadservice.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -59,5 +61,17 @@ public class UserService {
                         .orElseThrow(() -> new UserNotFoundException(keycloakId));
 
         return mapUserToDto(user);
+    }
+
+    public Set<ScheduleEntry> getAllScheduleEntriesByHackathonId(Long hackathonId) {
+        return userRepository.getAllScheduleEntriesByHackathonId(hackathonId);
+    }
+
+    public Set<ScheduleEntry> getUserScheduleEntriesByUserId(Long userId) {
+
+        User user = userRepository.findById(userId).orElseThrow();
+
+
+        return user.getScheduleEntries();
     }
 }

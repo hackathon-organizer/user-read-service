@@ -1,9 +1,10 @@
-package com.teamsfinder.userreadservice.user.dto;
+package com.hackathonorganizer.userreadservice.user.dto;
 
-import com.teamsfinder.userreadservice.tag.dto.TagResponseDto;
-import com.teamsfinder.userreadservice.tag.model.Tag;
-import com.teamsfinder.userreadservice.user.model.AccountType;
-import com.teamsfinder.userreadservice.user.model.User;
+
+import com.hackathonorganizer.userreadservice.tag.dto.TagResponseDto;
+import com.hackathonorganizer.userreadservice.tag.model.Tag;
+import com.hackathonorganizer.userreadservice.user.model.AccountType;
+import com.hackathonorganizer.userreadservice.user.model.User;
 
 import java.util.List;
 

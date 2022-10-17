@@ -1,4 +1,4 @@
-package com.teamsfinder.userreadservice.user.exception;
+package com.hackathonorganizer.userreadservice.user.exception;
 
 public class UserNotFoundException extends RuntimeException {
 

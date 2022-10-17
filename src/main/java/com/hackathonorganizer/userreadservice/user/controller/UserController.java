@@ -1,11 +1,13 @@
-package com.teamsfinder.userreadservice.user.controller;
+package com.hackathonorganizer.userreadservice.user.controller;
 
-import com.teamsfinder.userreadservice.user.dto.UserResponseDto;
-import com.teamsfinder.userreadservice.user.service.UserService;
+import com.hackathonorganizer.userreadservice.user.dto.UserResponseDto;
+import com.hackathonorganizer.userreadservice.user.model.ScheduleEntry;
+import com.hackathonorganizer.userreadservice.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/api/v1/read/users")
@@ -30,5 +32,15 @@ class UserController {
     List<UserResponseDto> getUserByUsername(@RequestParam("username") String username) {
 
         return userService.getUsersByUsername(username);
+    }
+
+    @GetMapping("/{userId}/schedule")
+    Set<ScheduleEntry> getUserSchedule(@PathVariable("userId") Long userId) {
+        return userService.getUserScheduleEntriesByUserId(userId);
+    }
+
+    @GetMapping("/schedule")
+    Set<ScheduleEntry> getAllUsersSchedule(@RequestParam("hackathonId") Long hackathonId) {
+        return userService.getAllScheduleEntriesByHackathonId(hackathonId);
     }
 }
