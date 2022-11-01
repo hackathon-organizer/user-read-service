@@ -35,13 +35,13 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotEmpty
+    @NotEmpty(message = "Username can not be empty!")
     private String username;
 
-    @NotEmpty
+    @NotEmpty(message = "Keycloak id can not be empty!")
     private String keyCloakId;
 
-    @NotNull
+    @NotNull(message = "Account type can not be null!")
     @Enumerated(EnumType.STRING)
     private AccountType accountType;
 
