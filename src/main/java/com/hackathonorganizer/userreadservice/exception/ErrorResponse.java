@@ -1,11 +1,9 @@
 package com.hackathonorganizer.userreadservice.exception;
 
-import java.time.LocalDateTime;
+import java.util.List;
 
-record ErrorResponse(
-        String httpStatus,
-        String message,
-        LocalDateTime localDateTime
+public record ErrorResponse (
+    String message,
+    List<String> details
 ) {
-
 }

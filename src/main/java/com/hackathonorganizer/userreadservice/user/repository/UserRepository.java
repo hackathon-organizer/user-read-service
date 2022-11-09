@@ -16,7 +16,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Query(value = "SELECT u FROM User u WHERE u.username LIKE %:username%")
     List<User> findUsersByUsername(String username);
 
-    @Query("SELECT u FROM User u WHERE u.keyCloakId = :keycloakId")
     Optional<User> findUserByKeyCloakId(String keycloakId);
 
     @Query("SELECT s FROM ScheduleEntry s WHERE hackathonId = :hackathonId")

@@ -1,6 +1,6 @@
 package com.hackathonorganizer.userreadservice.user.controller;
 
-import com.hackathonorganizer.userreadservice.user.dto.UserResponseDto;
+import com.hackathonorganizer.userreadservice.user.model.dto.UserResponseDto;
 import com.hackathonorganizer.userreadservice.user.model.ScheduleEntry;
 import com.hackathonorganizer.userreadservice.user.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -22,17 +22,19 @@ class UserController {
         return userService.getUserById(id);
     }
 
-    @GetMapping("/kc/{keycloakId}")
+    @GetMapping("/keycloak/{keycloakId}")
     UserResponseDto getUserByKeycloakId(@PathVariable("keycloakId") String keycloakId) {
 
         return userService.getUserByKeyCloakId(keycloakId);
     }
     
     @GetMapping
-    List<UserResponseDto> getUserByUsername(@RequestParam("username") String username) {
+    List<UserResponseDto> getUsersByUsername(@RequestParam("username") String username) {
 
         return userService.getUsersByUsername(username);
     }
+
+    // TODO add controller to retrieve schedule which date >= today && asc
 
     @GetMapping("/{userId}/schedule")
     Set<ScheduleEntry> getUserSchedule(@PathVariable("userId") Long userId) {
