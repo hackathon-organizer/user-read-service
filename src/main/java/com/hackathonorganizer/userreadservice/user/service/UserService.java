@@ -2,12 +2,17 @@ package com.hackathonorganizer.userreadservice.user.service;
 
 
 import com.hackathonorganizer.userreadservice.exception.UserException;
+import com.hackathonorganizer.userreadservice.user.model.dto.ScheduleEntryResponse;
+import com.hackathonorganizer.userreadservice.user.model.dto.UserMembershipResponse;
 import com.hackathonorganizer.userreadservice.user.model.dto.UserResponseDto;
-import com.hackathonorganizer.userreadservice.user.model.ScheduleEntry;
 import com.hackathonorganizer.userreadservice.user.model.User;
+import com.hackathonorganizer.userreadservice.user.repository.ScheduleEntryRepository;
 import com.hackathonorganizer.userreadservice.user.repository.UserRepository;
 import com.hackathonorganizer.userreadservice.user.utils.UserMapper;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -19,13 +24,7 @@ import java.util.Set;
 public class UserService {
 
     private final UserRepository userRepository;
-
-    public List<UserResponseDto> getUsersByUsername(String username) {
-
-        List<User> users = userRepository.findUsersByUsername(username);
-
-        return UserMapper.mapUsersToDto(users);
-    }
+    private final ScheduleEntryRepository scheduleEntryRepository;
 
     public UserResponseDto getUserByKeyCloakId(String keycloakId) {
 
@@ -36,25 +35,57 @@ public class UserService {
         return UserMapper.mapUserToDto(user);
     }
 
-    public Set<ScheduleEntry> getAllScheduleEntriesByHackathonId(Long hackathonId) {
-        return userRepository.getAllScheduleEntriesByHackathonId(hackathonId);
+    public Set<ScheduleEntryResponse> getAllScheduleEntriesByHackathonId(Long hackathonId) {
+
+        return  UserMapper.mapToScheduleEntryResponses(
+                scheduleEntryRepository.getAllScheduleEntriesByHackathonId(hackathonId));
     }
 
-    public Set<ScheduleEntry> getUserScheduleEntriesByUserId(Long userId) {
+    public Set<ScheduleEntryResponse> getUserScheduleEntries(Long userId, Long hackathonId) {
 
-        User user = userRepository.findById(userId).orElseThrow(() ->
-                new UserException(String.format("User with id: %d not found", userId),
-                HttpStatus.NOT_FOUND));
-
-        return userRepository.getUserScheduleEntriesByUserId(userId);
+        return UserMapper.mapToScheduleEntryResponses(
+                scheduleEntryRepository.findByUserIdAndHackathonId(userId, hackathonId));
     }
 
-    public UserResponseDto getUserById(Long userId) {
+    public User getUserById(Long userId) {
 
-        User user = userRepository.findById(userId).orElseThrow(() ->
+        return userRepository.findById(userId).orElseThrow(() ->
                 new UserException(String.format("User with id: %d not found", userId),
                 HttpStatus.NOT_FOUND));
+    }
 
-        return UserMapper.mapUserToDto(user);
+    public List<UserResponseDto> getMembersByTeamId(Long teamId) {
+
+        return userRepository.findTeamMembersByTeamId(teamId)
+                .stream().map(UserMapper::mapUserToDto).toList();
+    }
+
+    public UserMembershipResponse getUserMembershipDetails(Long userId) {
+
+        User user = getUserById(userId);
+
+        return new UserMembershipResponse(user.getId(),
+                user.getCurrentHackathonId(), user.getCurrentTeamId());
+    }
+
+    public Page<UserResponseDto> getHackathonParticipants(List<Long> usersIds, Pageable pageable) {
+
+        Page<User> usersPage = userRepository.findAllByIdIn(usersIds, pageable);
+
+        List<UserResponseDto> usersResponse = usersPage.getContent()
+                .stream().map(UserMapper::mapUserToDto).toList();
+
+        return new PageImpl<>(usersResponse, pageable, usersPage.getTotalElements());
+    }
+
+    public Page<UserResponseDto> getHackathonParticipantsByUsername(String username, Long hackathonId, Pageable pageable) {
+
+        Page<User> usersPage =
+                userRepository.findByUsernameAndCurrentHackathonId(username, hackathonId, pageable);
+
+        List<UserResponseDto> usersResponse = usersPage.getContent()
+                .stream().map(UserMapper::mapUserToDto).toList();
+
+        return new PageImpl<>(usersResponse, pageable, usersPage.getTotalElements());
     }
 }
