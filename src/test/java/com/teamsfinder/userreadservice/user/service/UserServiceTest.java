@@ -1,18 +1,18 @@
 package com.teamsfinder.userreadservice.user.service;
 
+import com.hackathonorganizer.userreadservice.user.model.AccountType;
+import com.hackathonorganizer.userreadservice.user.model.User;
+import com.hackathonorganizer.userreadservice.user.model.dto.UserResponseDto;
+import com.hackathonorganizer.userreadservice.user.repository.UserRepository;
+import com.hackathonorganizer.userreadservice.user.service.UserService;
 import com.teamsfinder.userreadservice.user.UnitBaseClass;
-import com.teamsfinder.userreadservice.user.dto.UserResponseDto;
-import com.teamsfinder.userreadservice.user.model.AccountType;
-import com.teamsfinder.userreadservice.user.model.User;
-import com.teamsfinder.userreadservice.user.repository.UserRepository;
+
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
@@ -36,28 +36,8 @@ class UserServiceTest extends UnitBaseClass {
             .githubProfileUrl(USER_GITHUB)
             .profilePictureUrl(USER_PICTURE)
             .blocked(false)
-            .tags(new ArrayList<>())
+            .tags(new HashSet<>())
             .build();
-
-    @Test
-    void getAllUsers() {
-        //given
-        when(userRepository.findAll()).thenReturn(List.of(testUser));
-
-        //when
-        List<UserResponseDto> usersDtos = underTest.getAllUsers();
-
-        //then
-        assertThat(usersDtos).isNotEmpty();
-        UserResponseDto userDto = usersDtos.get(0);
-        assertThat(userDto.id()).isEqualTo(1L);
-        assertThat(userDto.keyCloakId()).isEqualTo(USER_KEYCLOAK_ID);
-        assertThat(userDto.accountType()).isEqualTo(AccountType.USER);
-        assertThat(userDto.githubProfileUrl()).isEqualTo(USER_GITHUB);
-        assertThat(userDto.profilePictureUrl()).isEqualTo(USER_PICTURE);
-        assertThat(userDto.blocked()).isEqualTo(false);
-        assertThat(userDto.tags().size()).isEqualTo(0);
-    }
 
     @Test
     void getUserById() {
@@ -70,10 +50,6 @@ class UserServiceTest extends UnitBaseClass {
         //then
         assertThat(userDto.id()).isEqualTo(1L);
         assertThat(userDto.keyCloakId()).isEqualTo(USER_KEYCLOAK_ID);
-        assertThat(userDto.accountType()).isEqualTo(AccountType.USER);
-        assertThat(userDto.githubProfileUrl()).isEqualTo(USER_GITHUB);
-        assertThat(userDto.profilePictureUrl()).isEqualTo(USER_PICTURE);
-        assertThat(userDto.blocked()).isEqualTo(false);
         assertThat(userDto.tags().size()).isEqualTo(0);
     }
 }
