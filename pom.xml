@@ -10,7 +10,7 @@
     </parent>
     <groupId>com.teamsfinder</groupId>
     <artifactId>user-read-service</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>1.0</version>
     <name>user-read-service</name>
     <description>user-read-service</description>
     <properties>
