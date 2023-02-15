@@ -14,28 +14,26 @@ import java.util.stream.Collectors;
 public class UserMapper {
 
 
-    public static UserResponseDto mapUserToDto(User user) {
+    public static UserResponseDto mapToDto(User user) {
         return new UserResponseDto(
                 user.getId(),
                 user.getUsername(),
+                user.getDescription(),
                 user.getKeyCloakId(),
-                user.getAccountType(),
-                user.getGithubProfileUrl(),
-                user.getProfilePictureUrl(),
                 user.getCurrentHackathonId(),
                 user.getCurrentTeamId(),
-                user.isBlocked(),
                 user.getTags()
         );
     }
 
     public static List<UserResponseDto> mapUsersToDto(List<User> user) {
-        return user.stream().map(UserMapper::mapUserToDto).toList();
+        return user.stream().map(UserMapper::mapToDto).toList();
     }
 
-    public static Set<ScheduleEntryResponse> mapToScheduleEntryResponses(Set<ScheduleEntry> scheduleEntries) {
+    public static Set<ScheduleEntryResponse> mapToScheduleEntryResponseSet(Set<ScheduleEntry> scheduleEntries) {
         return scheduleEntries.stream().map(entry -> new ScheduleEntryResponse(
                 entry.getId(),
+                entry.getUser().getUsername(),
                 entry.getTeamId(),
                 entry.getUser().getId(),
                 entry.getHackathonId(),

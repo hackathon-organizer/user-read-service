@@ -17,9 +17,15 @@ public class ResourceServerConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http
-                .authorizeRequests()
-                .anyRequest().authenticated() // OR .access("authenticated AND hasRole('product_read')")
+
+        http.authorizeRequests()
+                .antMatchers("/api/v1/read/users",
+                        "/api/v1/read/users/keycloak/{id}",
+                        "/api/v1/read/users/{id}",
+                        "/api/v1/read/users/schedule",
+                        "/api/v1/read/users/hackathon-participants",
+                        "/api/v1/read/users/tags").permitAll()
+                .anyRequest().authenticated()
                 .and()
                 .oauth2ResourceServer()
                 .jwt(jwt -> jwt.jwtAuthenticationConverter(jwtAuthenticationConverter()));

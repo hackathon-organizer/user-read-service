@@ -1,16 +1,11 @@
 package com.hackathonorganizer.userreadservice.user.model;
 
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -22,12 +17,17 @@ import java.util.Set;
 @Table(name = "user_profile")
 public class User {
 
+    @OneToMany(mappedBy = "user")
+    Set<ScheduleEntry> scheduleEntries;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @NotEmpty
     private String username;
+
+    private String description;
 
     @NotEmpty
     private String keyCloakId;
@@ -50,8 +50,5 @@ public class User {
     @JoinTable(name = "user_tags",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "tag_id"))
-    private List<Tag> tags;
-
-    @OneToMany(mappedBy = "user")
-    Set<ScheduleEntry> scheduleEntries;
+    private Set<Tag> tags;
 }

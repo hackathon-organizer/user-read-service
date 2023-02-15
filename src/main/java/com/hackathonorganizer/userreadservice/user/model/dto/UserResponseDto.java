@@ -2,30 +2,17 @@ package com.hackathonorganizer.userreadservice.user.model.dto;
 
 
 import com.hackathonorganizer.userreadservice.user.model.Tag;
-import com.hackathonorganizer.userreadservice.user.model.AccountType;
 
-import java.util.List;
+import java.util.Set;
 
 public record UserResponseDto(
 
         Long id,
-
         String username,
-
+        String description,
         String keyCloakId,
-
-        AccountType accountType,
-
-        String githubProfileUrl,
-
-        String profilePictureUrl,
-
         Long currentHackathonId,
-
         Long currentTeamId,
-
-        boolean blocked,
-
-        List<Tag> tags
+        Set<Tag> tags
 ) {
 }

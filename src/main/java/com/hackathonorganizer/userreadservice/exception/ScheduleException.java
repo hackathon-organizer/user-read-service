@@ -2,12 +2,9 @@ package com.hackathonorganizer.userreadservice.exception;
 
 import org.springframework.http.HttpStatus;
 
-public class ScheduleException extends RuntimeException {
-
-    private final HttpStatus httpStatus;
+public class ScheduleException extends BaseException {
 
     public ScheduleException(String message, HttpStatus httpStatus) {
-        super(message);
-        this.httpStatus = httpStatus;
+        super(message, httpStatus);
     }
 }

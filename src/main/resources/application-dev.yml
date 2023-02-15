@@ -1,21 +1,19 @@
 spring:
-  profiles:
-    active: dev
   config:
-    import:  optional:configserver:http://${CONFIG_SERVER_HOST}:${CONFIG_SERVER_PORT}
+    import: optional:configserver:http://localhost:8888/
   cloud:
     vault:
       generic:
         enabled: true
         profile-separator: '/'
         default-context: user-read-service
-  application:
-    name: user-read-service
   jpa:
-    hibernate:
-      ddl-auto: validate
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: validate
+  application:
+    name: user-read-service
 server:
   port: 0

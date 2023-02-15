@@ -1,7 +1,5 @@
 package com.hackathonorganizer.userreadservice.user.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -12,33 +10,31 @@ import java.time.LocalDateTime;
 
 @Entity
 @Getter
+@Setter
 @Table(name = "schedule_entry")
 public class ScheduleEntry {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+    private Long id;
 
-    Long teamId;
+    private Long teamId;
 
-    @NotNull
-    Long hackathonId;
+    private Long hackathonId;
 
-    String info;
+    private String info;
 
-    String entryColor;
+    private String entryColor;
 
-    boolean isAvailable;
+    private boolean isAvailable;
 
-    @NotNull
     @DateTimeFormat(pattern = "HH:mm dd-MM-YYYY")
-    LocalDateTime sessionStart;
+    private LocalDateTime sessionStart;
 
-    @NotNull
     @DateTimeFormat(pattern = "HH:mm dd-MM-YYYY")
-    LocalDateTime sessionEnd;
+    private LocalDateTime sessionEnd;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="user_id", nullable=false)
-    User user;
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 }

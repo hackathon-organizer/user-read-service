@@ -1,36 +1,32 @@
 package com.hackathonorganizer.userreadservice.user.model.dto;
 
-import com.hackathonorganizer.userreadservice.user.model.User;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 public record ScheduleEntryResponse(
 
-    Long id,
+        Long id,
 
-    Long teamId,
+        String username,
 
-    @NotNull
-    Long userId,
+        Long teamId,
 
-    @NotNull
-    Long hackathonId,
+        Long userId,
 
-    String info,
+        Long hackathonId,
 
-    String entryColor,
+        String info,
 
-    boolean isAvailable,
+        String entryColor,
 
-    @NotNull
-    @DateTimeFormat(pattern = "HH:mm dd-MM-YYYY")
-    LocalDateTime sessionStart,
+        boolean isAvailable,
 
-    @NotNull
-    @DateTimeFormat(pattern = "HH:mm dd-MM-YYYY")
-    LocalDateTime sessionEnd
+        @DateTimeFormat(pattern = "HH:mm dd-MM-YYYY")
+        LocalDateTime sessionStart,
+
+        @DateTimeFormat(pattern = "HH:mm dd-MM-YYYY")
+        LocalDateTime sessionEnd
 ) {
 }
