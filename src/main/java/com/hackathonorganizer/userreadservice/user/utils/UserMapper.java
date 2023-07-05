@@ -3,7 +3,7 @@ package com.hackathonorganizer.userreadservice.user.utils;
 import com.hackathonorganizer.userreadservice.user.model.ScheduleEntry;
 import com.hackathonorganizer.userreadservice.user.model.User;
 import com.hackathonorganizer.userreadservice.user.model.dto.ScheduleEntryResponse;
-import com.hackathonorganizer.userreadservice.user.model.dto.UserResponseDto;
+import com.hackathonorganizer.userreadservice.user.model.dto.UserResponse;
 import lombok.experimental.UtilityClass;
 
 import java.util.List;
@@ -13,9 +13,8 @@ import java.util.stream.Collectors;
 @UtilityClass
 public class UserMapper {
 
-
-    public static UserResponseDto mapToDto(User user) {
-        return new UserResponseDto(
+    public static UserResponse mapToDto(User user) {
+        return new UserResponse(
                 user.getId(),
                 user.getUsername(),
                 user.getDescription(),
@@ -24,10 +23,6 @@ public class UserMapper {
                 user.getCurrentTeamId(),
                 user.getTags()
         );
-    }
-
-    public static List<UserResponseDto> mapUsersToDto(List<User> user) {
-        return user.stream().map(UserMapper::mapToDto).toList();
     }
 
     public static Set<ScheduleEntryResponse> mapToScheduleEntryResponseSet(Set<ScheduleEntry> scheduleEntries) {

@@ -5,7 +5,7 @@ import com.hackathonorganizer.userreadservice.user.model.Tag;
 
 import java.util.Set;
 
-public record UserResponseDto(
+public record UserResponse(
 
         Long id,
         String username,

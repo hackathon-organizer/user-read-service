@@ -2,7 +2,7 @@ package com.hackathonorganizer.userreadservice.user.controller;
 
 import com.hackathonorganizer.userreadservice.user.model.Tag;
 import com.hackathonorganizer.userreadservice.user.model.dto.ScheduleEntryResponse;
-import com.hackathonorganizer.userreadservice.user.model.dto.UserResponseDto;
+import com.hackathonorganizer.userreadservice.user.model.dto.UserResponse;
 import com.hackathonorganizer.userreadservice.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -22,21 +22,21 @@ class UserController {
     private final UserService userService;
 
     @GetMapping("/{id}")
-    public UserResponseDto getUserById(@PathVariable("id") Long id) {
+    public UserResponse getUserById(@PathVariable("id") Long id) {
 
         return userService.getUserById(id);
     }
 
     @GetMapping("/keycloak/{keycloakId}")
-    public UserResponseDto getUserByKeycloakId(@PathVariable("keycloakId") String keycloakId) {
+    public UserResponse getUserByKeycloakId(@PathVariable("keycloakId") String keycloakId) {
 
         return userService.getUserByKeyCloakId(keycloakId);
     }
 
     @GetMapping
-    public Page<UserResponseDto> getHackathonUsersByUsername(@RequestParam("username") String username,
-                                                             @RequestParam("hackathonId") Long hackathonId,
-                                                             Pageable pageable) {
+    public Page<UserResponse> getHackathonUsersByUsername(@RequestParam("username") String username,
+                                                          @RequestParam("hackathonId") Long hackathonId,
+                                                          Pageable pageable) {
 
         return userService.getHackathonParticipantsByUsername(username, hackathonId, pageable);
     }
@@ -58,13 +58,13 @@ class UserController {
 
     @GetMapping("/membership")
     @RolesAllowed({"USER"})
-    public List<UserResponseDto> getMembersByTeamId(@RequestParam("teamId") Long teamId) {
+    public List<UserResponse> getMembersByTeamId(@RequestParam("teamId") Long teamId) {
 
         return userService.getMembersByTeamId(teamId);
     }
 
     @PostMapping("/hackathon-participants")
-    public Page<UserResponseDto> getHackathonParticipants(@RequestBody List<Long> usersIds, Pageable pageable) {
+    public Page<UserResponse> getHackathonParticipants(@RequestBody List<Long> usersIds, Pageable pageable) {
 
         return userService.getHackathonParticipants(usersIds, pageable);
     }

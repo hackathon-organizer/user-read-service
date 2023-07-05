@@ -1,4 +1,6 @@
 spring:
+  liquibase:
+    enabled: false
   config:
     import: optional:configserver:http://localhost:8888/
   cloud:

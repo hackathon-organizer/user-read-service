@@ -23,4 +23,10 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Query("SELECT u FROM User u WHERE u.currentHackathonId = :hackathonId " +
             "AND u.username LIKE %:username%")
     Page<User> findByUsernameAndCurrentHackathonId(String username, Long hackathonId, Pageable pageable);
+
+    @Query("SELECT u FROM User u JOIN FETCH u.scheduleEntries")
+    Optional<User> findUserByIdWithScheduleEntries(Long userId);
+
+    @Query("SELECT u FROM User u JOIN FETCH u.tags")
+    Optional<User> findUserByIdWithTags(Long userId);
 }

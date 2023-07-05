@@ -6,6 +6,7 @@ import lombok.*;
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -17,28 +18,19 @@ import java.util.Set;
 @Table(name = "user_profile")
 public class User {
 
-    @OneToMany(mappedBy = "user")
-    Set<ScheduleEntry> scheduleEntries;
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotEmpty
+    @NotEmpty(message = "Username must not be empty")
     private String username;
 
+    @NotEmpty(message = "Description must not be empty")
     private String description;
 
-    @NotEmpty
+    @NotEmpty(message = "Keycloak id must not be empty")
+    @Column(updatable = false)
     private String keyCloakId;
-
-    @NotNull
-    @Enumerated(EnumType.STRING)
-    private AccountType accountType;
-
-    private String githubProfileUrl;
-
-    private String profilePictureUrl;
 
     private Long currentHackathonId;
 
@@ -46,9 +38,14 @@ public class User {
 
     private boolean blocked;
 
+    @Builder.Default
     @ManyToMany
     @JoinTable(name = "user_tags",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "tag_id"))
-    private Set<Tag> tags;
+    private Set<Tag> tags = new HashSet<>();
+
+    @Builder.Default
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private Set<ScheduleEntry> scheduleEntries = new HashSet<>();
 }

@@ -3,7 +3,7 @@ package com.hackathonorganizer.userreadservice.user.model.dto;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.NotNull;
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 
 public record ScheduleEntryResponse(
 
@@ -23,10 +23,12 @@ public record ScheduleEntryResponse(
 
         boolean isAvailable,
 
+        @NotNull
         @DateTimeFormat(pattern = "HH:mm dd-MM-YYYY")
-        LocalDateTime sessionStart,
+        OffsetDateTime sessionStart,
 
+        @NotNull
         @DateTimeFormat(pattern = "HH:mm dd-MM-YYYY")
-        LocalDateTime sessionEnd
+        OffsetDateTime sessionEnd
 ) {
 }
