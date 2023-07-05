@@ -6,8 +6,8 @@ Read service used mainly to obtain users related data.
 
 - Fetch information about user profile
 - Fetch information about user schedule
-- Get hackathon participants detials
-- Get team members detials
+- Get hackathon participants details
+- Get team members details
 
 # Live demo
 
